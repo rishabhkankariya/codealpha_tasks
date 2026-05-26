@@ -143,7 +143,7 @@ ollama pull llama3
 ### Check Database Status
 
 ```powershell
-python check_tables.py
+python backend/scripts/check_tables.py
 ```
 
 Expected output:
@@ -339,7 +339,7 @@ cd backend
 pip list > installed_packages.txt
 
 # 4. Check database
-python check_tables.py > database_status.txt
+python backend/scripts/check_tables.py > database_status.txt
 
 # 5. Check backend logs
 # Copy error messages from terminal

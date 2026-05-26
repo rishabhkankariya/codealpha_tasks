@@ -8,6 +8,9 @@ import AuthLayout from './layouts/AuthLayout'
 // Public pages
 import HomePage from './pages/HomePage'
 import RoutesPage from './pages/RoutesPage'
+import PrivacyPage from './pages/PrivacyPage'
+import TermsPage from './pages/TermsPage'
+import AccessibilityPage from './pages/AccessibilityPage'
 
 // Auth pages
 import LoginPage from './pages/auth/LoginPage'
@@ -64,6 +67,9 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="routes" element={<RoutesPage />} />
+          <Route path="privacy" element={<PrivacyPage />} />
+          <Route path="terms" element={<TermsPage />} />
+          <Route path="accessibility" element={<AccessibilityPage />} />
         </Route>
 
         {/* ── AUTH ────────────────────────────────────────────────── */}

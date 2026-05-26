@@ -54,7 +54,7 @@ export default function MainLayout() {
 
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition">
+              <div className="w-9 h-9 bg-gradient-to-br from-[#2e5bff] to-[#6b13af] rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition">
                 <Bus className="h-5 w-5 text-white" />
               </div>
               <div className="hidden sm:block">
@@ -99,7 +99,7 @@ export default function MainLayout() {
                       onClick={() => setUserMenuOpen(!userMenuOpen)}
                       onBlur={() => setTimeout(() => setUserMenuOpen(false), 150)}
                       className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition">
-                      <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">
+                      <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#2e5bff] to-[#6b13af] flex items-center justify-center text-white text-xs font-bold">
                         {initials}
                       </div>
                       <span className="text-sm font-medium text-gray-700 max-w-[80px] truncate">
@@ -139,7 +139,7 @@ export default function MainLayout() {
                     Sign In
                   </Link>
                   <Link to="/register"
-                    className="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-lg shadow-sm transition">
+                    className="px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-[#2e5bff] to-[#6b13af] hover:brightness-110 rounded-lg shadow-sm transition">
                     Get Started
                   </Link>
                 </>
@@ -293,9 +293,9 @@ export default function MainLayout() {
           <div className="border-t border-gray-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-gray-500 text-sm">
             <p>© 2026 SmartBus · PMPML Pune. All rights reserved.</p>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-gray-300 transition">Privacy</a>
-              <a href="#" className="hover:text-gray-300 transition">Terms</a>
-              <a href="#" className="hover:text-gray-300 transition">Accessibility</a>
+              <Link to="/privacy" className="hover:text-gray-300 transition">Privacy</Link>
+              <Link to="/terms" className="hover:text-gray-300 transition">Terms</Link>
+              <Link to="/accessibility" className="hover:text-gray-300 transition">Accessibility</Link>
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -32,4 +34,33 @@
   .card {
     @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
   }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  }
+
+  .glow-blue {
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  }
+
+  .glow-violet {
+    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }

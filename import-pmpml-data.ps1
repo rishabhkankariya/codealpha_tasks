@@ -7,9 +7,9 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
 # Check if dataset.csv exists
-if (-not (Test-Path "dataset.csv")) {
-    Write-Host "Error: dataset.csv not found in current directory" -ForegroundColor Red
-    Write-Host "Please make sure dataset.csv is in the project root folder" -ForegroundColor Yellow
+if (-not (Test-Path "backend/data/dataset.csv")) {
+    Write-Host "Error: dataset.csv not found in backend/data/" -ForegroundColor Red
+    Write-Host "Please make sure dataset.csv is in the backend/data/ folder" -ForegroundColor Yellow
     exit 1
 }
 
@@ -41,7 +41,7 @@ Write-Host "[3/3] Importing PMPML data..." -ForegroundColor Yellow
 Write-Host ""
 
 # Run the importer
-python app/utils/pmpml_importer.py ../dataset.csv
+python app/utils/pmpml_importer.py data/dataset.csv
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Cyan

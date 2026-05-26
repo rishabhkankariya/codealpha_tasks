@@ -60,7 +60,7 @@ class PMPMLDatasetImporter:
         # Minimum 15 minutes, maximum 180 minutes
         return max(15, min(180, minutes))
     
-    def import_from_csv(self, csv_path: str = "dataset.csv") -> Dict[str, Any]:
+    def import_from_csv(self, csv_path: str = "data/dataset.csv") -> Dict[str, Any]:
         """
         Import PMPML routes from CSV file
         
@@ -187,7 +187,7 @@ class PMPMLDatasetImporter:
             }
 
 
-def import_pmpml_dataset(csv_path: str = "dataset.csv") -> Dict[str, Any]:
+def import_pmpml_dataset(csv_path: str = "data/dataset.csv") -> Dict[str, Any]:
     """
     Import PMPML dataset from CSV file
     
