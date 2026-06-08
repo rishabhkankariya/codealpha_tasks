@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../lib/api'
+import { useAuthStore } from '../store/authStore'
 import { CheckCircle, AlertCircle, Clock, MapPin, Tag, Users, ChevronRight, ArrowLeft, Zap } from 'lucide-react'
 
 interface PassType {
@@ -42,6 +43,7 @@ const validityLabel = (days: number) => {
 
 export default function BuyPassPage() {
   const navigate = useNavigate()
+  const { user } = useAuthStore()
   const [passTypes, setPassTypes] = useState<PassType[]>([])
   const [selectedPass, setSelectedPass] = useState<PassType | null>(null)
   const [activeCategory, setActiveCategory] = useState<string>('All')
@@ -65,16 +67,79 @@ export default function BuyPassPage() {
   }
 
   const handlePurchase = async () => {
-    if (!selectedPass) return
+    if (!selectedPass || !user) return
+    
+    // For free passes, bypass Razorpay payment gateway
+    if (selectedPass.is_free) {
+      try {
+        setLoading(true)
+        setError('')
+        await api.post('/api/v1/passes/', { pass_type_id: selectedPass.id })
+        setSuccess(true)
+        setTimeout(() => navigate('/my-passes'), 2000)
+      } catch (err: any) {
+        setError(err.response?.data?.detail || 'Purchase failed. Please try again.')
+      } finally {
+        setLoading(false)
+      }
+      return
+    }
+    
+    // For paid passes, launch Razorpay Checkout flow
     try {
       setLoading(true)
       setError('')
-      await api.post('/api/v1/passes/', { pass_type_id: selectedPass.id })
-      setSuccess(true)
-      setTimeout(() => navigate('/my-passes'), 2000)
+      
+      // 1. Fetch Razorpay key from configuration
+      const configRes = await api.get('/api/v1/payments/config')
+      const razorpayKey = configRes.data.razorpay_key_id
+      
+      const email = user.email
+      const amount = Math.round(selectedPass.price * 100)
+      
+      const options = {
+        key: razorpayKey,
+        amount: amount.toString(),
+        currency: "INR",
+        name: "PMPML Transit",
+        description: `Bus Pass: ${selectedPass.name}`,
+        prefill: { email: email, name: `${user.first_name} ${user.last_name}` },
+        handler: async function (response: any) {
+          try {
+            setLoading(true)
+            setError('')
+            
+            // Send to verify endpoint (verifies, captures, and creates pass)
+            await api.post('/api/v1/payments/verify', {
+              payment_id: response.razorpay_payment_id,
+              email: email,
+              reference_type: "pass",
+              pass_type_id: selectedPass.id
+            })
+            
+            setSuccess(true)
+            setTimeout(() => navigate('/my-passes'), 2000)
+          } catch (err: any) {
+            setError(err.response?.data?.detail || 'Payment verification failed.')
+          } finally {
+            setLoading(false)
+          }
+        },
+        theme: {
+          color: "#2e5bff"
+        },
+        modal: {
+          ondismiss: function() {
+            setLoading(false)
+          }
+        }
+      }
+      
+      const rzp = new (window as any).Razorpay(options)
+      rzp.open()
+      
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Purchase failed. Please try again.')
-    } finally {
+      setError(err.response?.data?.detail || 'Failed to initiate payment. Please try again.')
       setLoading(false)
     }
   }

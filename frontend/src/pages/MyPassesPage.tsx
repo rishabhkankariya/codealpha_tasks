@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import api from '../lib/api'
-import { CreditCard, Calendar, QrCode, X, AlertCircle, CheckCircle, Clock, MapPin, Tag } from 'lucide-react'
+import { CreditCard, Calendar, QrCode, X, AlertCircle, CheckCircle, Clock, MapPin, Tag, Download } from 'lucide-react'
 
 interface Pass {
   id: string
@@ -228,6 +228,33 @@ export default function MyPassesPage() {
                 <CheckCircle className="h-5 w-5 text-green-600" />
                 <span className="text-sm font-medium text-green-800">Unlimited Travel</span>
               </div>
+
+              {/* Download receipt button */}
+              <button 
+                onClick={async () => {
+                  if (!selectedPass) return
+                  try {
+                    const response = await api.get(`/api/v1/payments/receipt/${selectedPass.id}`, {
+                      responseType: 'blob'
+                    })
+                    const blob = new Blob([response.data], { type: 'application/pdf' })
+                    const url = window.URL.createObjectURL(blob)
+                    const link = document.createElement('a')
+                    link.href = url
+                    link.setAttribute('download', `receipt-pass-${selectedPass.pass_number}.pdf`)
+                    document.body.appendChild(link)
+                    link.click()
+                    link.parentNode?.removeChild(link)
+                    window.URL.revokeObjectURL(url)
+                  } catch (err) {
+                    console.error('Download failed:', err)
+                    alert('Failed to download PDF receipt.')
+                  }
+                }}
+                className="w-full flex items-center justify-center gap-2 mb-3 px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium hover:bg-gray-50 transition text-gray-700"
+              >
+                <Download className="h-4 w-4" /> Download Receipt
+              </button>
 
               <button onClick={() => setSelectedPass(null)} className="w-full btn btn-primary">
                 Close
