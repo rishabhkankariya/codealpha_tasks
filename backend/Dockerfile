@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
-COPY requirements.txt .
+COPY requirements-minimal.txt .
 
 # Install Python dependencies globally
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-minimal.txt
 
 # Stage 2: Runtime
 FROM python:3.11-slim
