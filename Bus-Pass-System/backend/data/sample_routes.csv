@@ -1,0 +1,11 @@
+route_number,origin,destination,distance_km,estimated_duration_minutes
+R101,Katraj,Hinjewadi,35.5,90
+R102,Pune Station,Wakad,25.3,60
+R103,Swargate,Baner,20.8,50
+R104,Hadapsar,Kothrud,18.5,45
+R105,Shivajinagar,Aundh,12.3,35
+R106,Deccan,Pimpri,22.7,55
+R107,Kothrud,Viman Nagar,28.4,70
+R108,Warje,Kalyani Nagar,24.6,60
+R109,Katraj,Swargate,8.5,25
+R110,Pune Station,Shivajinagar,5.2,15
