@@ -28,3 +28,7 @@ httpx==0.26.0
 # PDF Generation
 reportlab==4.0.9
 
+# Redis
+redis==5.0.1
+
+
