@@ -4,24 +4,30 @@ Integrates with existing bus system to provide intelligent route assistance
 """
 import os
 import json
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, cast
 from decimal import Decimal
 from datetime import datetime
-from sqlalchemy.orm import Session
-from sqlalchemy import text, or_
+from sqlalchemy.orm import Session  # type: ignore
+from sqlalchemy import text, or_  # type: ignore
 
 
 # AI/ML imports (install: pip install langchain chromadb sentence-transformers)
 try:
-    from langchain.embeddings import HuggingFaceEmbeddings
-    from langchain.vectorstores import Chroma
-    from langchain.text_splitter import RecursiveCharacterTextSplitter
-    from langchain.llms import Ollama
-    from langchain.chains import RetrievalQA
-    from langchain.prompts import PromptTemplate
+    from langchain.embeddings import HuggingFaceEmbeddings  # type: ignore
+    from langchain.vectorstores import Chroma  # type: ignore
+    from langchain.text_splitter import RecursiveCharacterTextSplitter  # type: ignore
+    from langchain.llms import Ollama  # type: ignore
+    from langchain.chains import RetrievalQA  # type: ignore
+    from langchain.prompts import PromptTemplate  # type: ignore
     LANGCHAIN_AVAILABLE = True
 except ImportError:
     LANGCHAIN_AVAILABLE = False
+    HuggingFaceEmbeddings = None
+    Chroma = None
+    RecursiveCharacterTextSplitter = None
+    Ollama = None
+    RetrievalQA = None
+    PromptTemplate = None
     print("Warning: LangChain not installed. AI features will be limited.")
 
 from app.models.route import Route
@@ -54,27 +60,27 @@ class AIRouteAssistant:
         ).first()
         
         if pricing_rule:
-            return pricing_rule.base_price
+            return cast(Decimal, pricing_rule.base_price)
         
         # Fallback calculation
         BASE_FARE = Decimal("10.00")
         PER_KM_RATE = Decimal("1.50")
-        fare = BASE_FARE + (route.distance_km * PER_KM_RATE)
-        fare = round(fare / 5) * 5  # Round to nearest ₹5
+        fare = BASE_FARE + (cast(Decimal, route.distance_km) * PER_KM_RATE)
+        fare = Decimal(round(float(cast(Decimal, fare / 5))) * 5)  # Round to nearest ₹5
         return max(Decimal("10.00"), min(fare, Decimal("100.00")))
     
     def _initialize_ai(self):
         """Initialize AI components"""
         try:
             # Initialize embeddings model
-            self.embeddings = HuggingFaceEmbeddings(
+            self.embeddings = HuggingFaceEmbeddings(  # type: ignore
                 model_name="sentence-transformers/all-MiniLM-L6-v2",
                 model_kwargs={'device': 'cpu'}
             )
             
             # Initialize Ollama LLM (make sure Ollama is running)
             try:
-                self.llm = Ollama(
+                self.llm = Ollama(  # type: ignore
                     model="llama3",  # or "mistral"
                     temperature=0.7,
                     base_url="http://localhost:11434"  # Default Ollama URL
@@ -104,7 +110,7 @@ class AIRouteAssistant:
         
         try:
             # Try to load existing vectorstore
-            self.vectorstore = Chroma(
+            self.vectorstore = Chroma(  # type: ignore
                 persist_directory=persist_directory,
                 embedding_function=self.embeddings
             )
@@ -134,7 +140,7 @@ class AIRouteAssistant:
                 "route_number": route.route_number,
                 "origin": route.origin,
                 "destination": route.destination,
-                "distance_km": float(route.distance_km),
+                "distance_km": float(cast(Decimal, route.distance_km)),
                 "duration_minutes": route.estimated_duration_minutes
             })
         
@@ -144,7 +150,7 @@ class AIRouteAssistant:
         
         # Create vectorstore
         print(f"Creating embeddings for {len(documents)} routes...")
-        self.vectorstore = Chroma.from_texts(
+        self.vectorstore = Chroma.from_texts(  # type: ignore
             texts=documents,
             embedding=self.embeddings,
             metadatas=metadatas,
@@ -188,12 +194,14 @@ mention the best options.
 
 Answer:"""
 
-        PROMPT = PromptTemplate(
+        PROMPT = PromptTemplate(  # type: ignore
             template=template,
             input_variables=["context", "question"]
         )
         
-        self.qa_chain = RetrievalQA.from_chain_type(
+        assert self.vectorstore is not None
+        assert self.llm is not None
+        self.qa_chain = RetrievalQA.from_chain_type(  # type: ignore
             llm=self.llm,
             chain_type="stuff",
             retriever=self.vectorstore.as_retriever(search_kwargs={"k": 5}),
@@ -269,10 +277,11 @@ Answer:"""
         """Generate AI response using RAG"""
         try:
             # Check if LLM is available
-            if not self.llm or not self.qa_chain:
+            if not self.llm or not self.qa_chain or not self.vectorstore:
                 print("LLM not available, using fallback")
                 return await self._fallback_response(query)
             
+            assert self.vectorstore is not None
             # Get AI response
             result = self.qa_chain({"query": query})
             answer = result["result"]
@@ -324,7 +333,8 @@ Answer:"""
             answer = "🎫 **PMPML Bus Pass Recommendations**\n\n"
             answer += "PMPML offers several digital passes for commuters in Pune:\n\n"
             for pt in pass_types:
-                price_str = f"₹{pt.price:.0f}" if pt.price > 0 else "FREE"
+                price_val = cast(Decimal, pt.price)
+                price_str = f"₹{price_val:.0f}" if price_val > 0 else "FREE"
                 answer += f"• **{pt.pass_name}**: {price_str} (Valid for {pt.validity_days} days). {pt.description}\n"
             answer += "\nTo purchase a pass, please go to the **Buy Pass** page from the sidebar!"
             suggestions = ["Daily Pass PMC", "Student Monthly Pass", "Women Special Pass"]
@@ -417,7 +427,7 @@ Answer:"""
                 "route_number": r.route_number,
                 "origin": r.origin,
                 "destination": r.destination,
-                "distance_km": float(r.distance_km),
+                "distance_km": float(cast(Decimal, r.distance_km)),
                 "duration_minutes": r.estimated_duration_minutes,
                 "fare": float(fare)
             })
