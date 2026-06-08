@@ -7,9 +7,9 @@ import json
 from typing import List, Dict, Any, Optional
 from decimal import Decimal
 from datetime import datetime
-import numpy as np
 from sqlalchemy.orm import Session
 from sqlalchemy import text, or_
+
 
 # AI/ML imports (install: pip install langchain chromadb sentence-transformers)
 try:
