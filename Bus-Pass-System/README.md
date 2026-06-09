@@ -1,258 +1,77 @@
-# Smart Bus Pass & Ticket Booking System
+# Cloud-Based Bus Pass System
 
-A cloud-native, production-grade transport management platform built on Azure infrastructure with FastAPI backend and React frontend.
+A comprehensive public transit pass and ticket management system, designed with a modern React interface and a robust FastAPI backend. It features user registration, pass purchasing, digital pass generation, real-time notification alerts, and full admin analytics dashboard control.
 
 ## Features
+- **User Registration/Login**: Secure JWT-based authentication for users and admins.
+- **Bus Pass Booking & Digital Pass Generation**: Purchase daily/monthly/annual passes for various demographics (students, seniors, divyang, etc.) with automated QR code generation.
+- **Interactive Ticket Booking**: Book single-ride bus tickets for specific routes and schedules.
+- **Admin Dashboard**: Comprehensive analytics for tickets, passes, users, and route performance.
+- **Docker Ready**: Easy containerized deployment using Docker Compose.
 
-- 🎫 **Digital Ticket Booking** - Real-time seat selection and booking
-- 🎟️ **Smart Bus Passes** - Digital passes with QR code verification
-- 🤖 **AI Chatbot** - Intelligent conversational assistant for support
-- 📊 **Admin Dashboard** - Comprehensive management and analytics
-- 🔔 **Real-time Notifications** - WebSocket-based instant updates
-- 🔒 **Enterprise Security** - JWT authentication, encryption, audit logging
-- ☁️ **Cloud-Native** - Scalable Azure infrastructure with auto-scaling
-- 📱 **Responsive Design** - Modern UI with glassmorphism effects
+## Technologies Used
+- **Frontend**: React 18, Vite, TypeScript, Tailwind CSS, Axios, Lucide React icons.
+- **Backend**: FastAPI (Python 3.11), SQLAlchemy, Alembic (migrations), Celery, WebSockets.
+- **Database**: SQLite (local) and PostgreSQL (production).
+- **Deployment & Infra**: Docker, Docker Compose, Terraform, Azure.
 
-## Technology Stack
+## Screenshots
+Screenshots of the application can be added to the `screenshots/` directory.
 
-### Backend
-- **FastAPI** - High-performance async Python framework
-- **PostgreSQL 15** - Relational database with advanced features
-- **Redis** - Caching and message queue
-- **Celery** - Asynchronous task processing
-- **WebSockets** - Real-time bidirectional communication
+## Run Locally
 
-### Frontend
-- **React 18** with TypeScript
-- **Tailwind CSS** - Utility-first styling
-- **React Query** - Server state management
-- **Socket.IO** - WebSocket client
-
-### AI/ML
-- **OpenAI GPT-4** - Conversational AI
-- **Sentence Transformers** - Semantic embeddings
-- **FAISS** - Vector similarity search
-
-### Cloud (Azure)
-- **App Service** - Application hosting
-- **Database for PostgreSQL** - Managed database
-- **Blob Storage** - File storage
-- **Key Vault** - Secrets management
-- **Monitor** - Logging and metrics
-
-## Quick Start
-
-### Prerequisites
-
-- Docker and Docker Compose
-- Node.js 20+ (for local frontend development)
-- Python 3.11+ (for local backend development)
-- Azure CLI (for cloud deployment)
-
-### Local Development
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/smart-bus-pass-system.git
-   cd smart-bus-pass-system
-   ```
-
-2. **Set up environment variables**
+### Option 1: Using Docker Compose (Recommended)
+1. Ensure you have **Docker Desktop** installed.
+2. From the `Bus-Pass-System` folder, create the `.env` file from the template:
    ```bash
    cp .env.example .env
-   # Edit .env with your configuration
    ```
-
-3. **Start all services with Docker Compose**
+3. Build and launch all services:
    ```bash
-   docker-compose up -d
+   docker-compose up -d --build
    ```
+4. Access the applications:
+   - **Frontend**: [http://localhost:3000](http://localhost:3000)
+   - **Backend API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-4. **Access the application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Documentation: http://localhost:8000/docs
-   - Celery Flower: http://localhost:5555
+---
 
-### Database Setup
+### Option 2: Running Services Separately
 
-The database schema is automatically initialized when you start the PostgreSQL container. To manually run migrations:
-
-```bash
-docker-compose exec backend alembic upgrade head
-```
-
-## Project Structure
-
-```
-smart-bus-pass-system/
-├── backend/                 # FastAPI backend
-│   ├── app/
-│   │   ├── api/            # API routes
-│   │   ├── core/           # Core configuration
-│   │   ├── models/         # Database models
-│   │   ├── schemas/        # Pydantic schemas
-│   │   ├── services/       # Business logic
-│   │   └── main.py         # Application entry point
-│   ├── database/           # Database schema and migrations
-│   ├── tests/              # Backend tests
-│   ├── Dockerfile
-│   └── requirements.txt
-├── frontend/               # React frontend
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API services
-│   │   ├── hooks/          # Custom hooks
-│   │   └── App.tsx         # Main app component
-│   ├── public/
-│   ├── Dockerfile
-│   └── package.json
-├── infrastructure/         # Infrastructure as Code
-│   └── terraform/          # Terraform configurations
-├── .github/
-│   └── workflows/          # CI/CD pipelines
-├── docker-compose.yml      # Local development setup
-└── README.md
-```
-
-## Development
-
-### Backend Development
-
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
-
-### Frontend Development
-
-```bash
-cd frontend
-npm install
-npm start
-```
-
-### Running Tests
-
-**Backend tests:**
-```bash
-cd backend
-pytest tests/ -v --cov=app
-```
-
-**Frontend tests:**
-```bash
-cd frontend
-npm test
-```
-
-### Code Quality
-
-**Backend linting:**
-```bash
-cd backend
-flake8 app
-black app
-mypy app
-```
-
-**Frontend linting:**
-```bash
-cd frontend
-npm run lint
-npm run type-check
-```
-
-## Deployment
-
-### Azure Deployment
-
-1. **Set up Azure infrastructure**
+#### 1. Backend Setup
+1. Navigate to the `backend` folder:
    ```bash
-   cd infrastructure/terraform
-   terraform init
-   terraform plan -var="environment=prod"
-   terraform apply -var="environment=prod"
+   cd backend
+   ```
+2. Create and activate a Python virtual environment:
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\Activate.ps1
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Configure your `.env` file:
+   ```bash
+   cp .env.example .env
+   ```
+5. Start the FastAPI development server:
+   ```bash
+   python -m uvicorn app.main:app --reload
    ```
 
-2. **Configure GitHub Secrets**
-   - `AZURE_CREDENTIALS` - Azure service principal credentials
-   - `DOCKER_USERNAME` - Docker Hub username
-   - `DOCKER_PASSWORD` - Docker Hub password
-
-3. **Deploy via GitHub Actions**
-   - Push to `main` branch for production deployment
-   - Push to `develop` branch for staging deployment
-
-### Manual Deployment
-
-```bash
-# Build and push Docker images
-docker build -t smartbuspass/backend:latest ./backend
-docker build -t smartbuspass/frontend:latest ./frontend
-docker push smartbuspass/backend:latest
-docker push smartbuspass/frontend:latest
-
-# Deploy to Azure App Service
-az webapp config container set --name smart-bus-pass-prod-api \
-  --resource-group smart-bus-pass-prod-rg \
-  --docker-custom-image-name smartbuspass/backend:latest
-```
-
-## API Documentation
-
-Interactive API documentation is available at:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-## Monitoring
-
-- **Application Insights**: Real-time application monitoring
-- **Log Analytics**: Centralized log aggregation
-- **Azure Monitor**: Metrics and alerts
-- **Flower**: Celery task monitoring at http://localhost:5555
-
-## Security
-
-- TLS 1.2+ encryption for all connections
-- JWT-based authentication
-- Password hashing with bcrypt
-- Rate limiting (100 requests/minute per IP)
-- Input validation and sanitization
-- CORS policy enforcement
-- Audit logging for all critical operations
-
-## Auto-scaling
-
-The system automatically scales based on CPU utilization:
-- **Scale Out**: CPU > 70% for 5 minutes → add instance
-- **Scale In**: CPU < 30% for 10 minutes → remove instance
-- **Min Instances**: 2 (high availability)
-- **Max Instances**: 10 (production)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For support, email support@smartbuspass.com or open an issue on GitHub.
-
-## Acknowledgments
-
-- FastAPI for the excellent async framework
-- React team for the powerful UI library
-- Azure for reliable cloud infrastructure
-- OpenAI for conversational AI capabilities
+#### 2. Frontend Setup
+1. Navigate to the `frontend` folder:
+   ```bash
+   cd frontend
+   ```
+2. Install the npm packages:
+   ```bash
+   npm install
+   ```
+3. Start the React development server:
+   ```bash
+   npm run dev
+   ```
+4. Open your browser and navigate to the local URL (typically [http://localhost:3000](http://localhost:3000)).
