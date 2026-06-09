@@ -1,0 +1,11 @@
+# Example Terraform Variables
+# Copy this file to terraform.tfvars and update with your values
+
+environment = "dev"
+location    = "eastus"
+project_name = "smart-bus-pass"
+
+# Add your IP addresses for Key Vault access
+allowed_ip_addresses = [
+  # "1.2.3.4/32"
+]

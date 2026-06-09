@@ -1,0 +1,157 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: smart-bus-postgres
+    environment:
+      POSTGRES_DB: smart_bus_pass_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - smart-bus-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: smart-bus-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - smart-bus-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart-bus-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-postgres}@postgres:5432/smart_bus_pass_db
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis}@redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    networks:
+      - smart-bus-network
+    restart: unless-stopped
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart-bus-celery-worker
+    command: celery -A app.celery_app worker --loglevel=info
+    environment:
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-postgres}@postgres:5432/smart_bus_pass_db
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis}@redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      AZURE_STORAGE_CONNECTION_STRING: ${AZURE_STORAGE_CONNECTION_STRING}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    networks:
+      - smart-bus-network
+    restart: unless-stopped
+
+  # Celery Beat (Scheduler)
+  celery-beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart-bus-celery-beat
+    command: celery -A app.celery_app beat --loglevel=info
+    environment:
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-postgres}@postgres:5432/smart_bus_pass_db
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis}@redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    networks:
+      - smart-bus-network
+    restart: unless-stopped
+
+  # Flower (Celery Monitoring)
+  flower:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart-bus-flower
+    command: celery -A app.celery_app flower --port=5555
+    environment:
+      REDIS_URL: redis://:${REDIS_PASSWORD:-redis}@redis:6379/0
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+      - celery-worker
+    networks:
+      - smart-bus-network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smart-bus-frontend
+    environment:
+      REACT_APP_API_URL: http://localhost:8000
+      REACT_APP_WS_URL: ws://localhost:8000
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - smart-bus-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  smart-bus-network:
+    driver: bridge
