@@ -99,7 +99,7 @@ export default function RoutesPage() {
             placeholder="Search by route number, origin, or destination..."
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="input w-full pl-11 pr-10"
+            className="input w-full pl-12 pr-10"
           />
           {searchTerm && (
             <button onClick={handleClearSearch}

@@ -7,6 +7,7 @@
 @layer base {
   body {
     @apply bg-gray-50 text-gray-900 antialiased;
+    font-family: 'Outfit', sans-serif;
   }
 }
 
@@ -28,11 +29,11 @@
   }
   
   .input {
-    @apply w-full px-4 py-3.5 border border-gray-200 bg-gray-50/50 rounded-xl text-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white shadow-sm focus:shadow-md text-gray-900 placeholder-gray-400;
+    @apply w-full px-4 py-3.5 border border-gray-200 bg-gray-50/50 rounded-xl text-sm transition-all duration-200 hover:border-gray-300 focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white shadow-sm focus:shadow-md text-gray-900 placeholder-gray-400;
   }
   
   .input-dark {
-    @apply w-full px-4 py-3.5 border border-slate-800 bg-slate-950/60 rounded-xl text-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent focus:bg-slate-950 shadow-inner text-white placeholder-slate-600;
+    @apply w-full px-4 py-3.5 border border-slate-800 bg-slate-950/60 rounded-xl text-sm transition-all duration-200 hover:border-slate-700 focus:outline-none focus:ring-4 focus:ring-red-500/20 focus:border-red-500 focus:bg-slate-950 shadow-inner text-white placeholder-slate-600;
   }
   
   .card {
@@ -62,6 +63,24 @@
 
   .animate-shimmer {
     animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translate(0px, 0px) scale(1); }
+    50% { transform: translate(30px, -30px) scale(1.1); }
+  }
+
+  @keyframes float-delay {
+    0%, 100% { transform: translate(0px, 0px) scale(1.1); }
+    50% { transform: translate(-30px, 30px) scale(1); }
+  }
+
+  .animate-float-slow {
+    animation: float-slow 12s ease-in-out infinite;
+  }
+
+  .animate-float-delay {
+    animation: float-delay 15s ease-in-out infinite;
   }
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
-import { Mail, Lock, AlertCircle, Shield, Eye, EyeOff } from 'lucide-react'
+import { Mail, Lock, AlertCircle, Shield, Eye, EyeOff, ArrowLeft } from 'lucide-react'
 
 export default function AdminLoginPage() {
   const navigate = useNavigate()
@@ -34,8 +34,8 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 relative overflow-hidden">
       {/* Background abstract glowing orbs */}
-      <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+      <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-orange-600/10 rounded-full blur-3xl pointer-events-none animate-float-delay" />
 
       <div className="w-full max-w-md relative z-10">
         {/* Logo */}
@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="admin@smartbus.com"
                   required
-                  className="input-dark pl-11"
+                  className="input-dark pl-12"
                 />
               </div>
             </div>
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="input-dark pl-11 pr-11"
+                  className="input-dark pl-12 pr-12"
                 />
                 <button 
                   type="button" 
@@ -129,16 +129,16 @@ export default function AdminLoginPage() {
           <div className="mt-8 pt-5 border-t border-slate-800/80 text-center">
             <p className="text-gray-500 text-sm">
               Not an admin?{' '}
-              <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition flex items-center justify-center gap-1 mt-1 hover:underline">
-                Passenger Login Portal →
+              <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition inline-flex items-center justify-center gap-1.5 mt-1 hover:underline group">
+                Passenger Login Portal <ArrowLeft className="h-3.5 w-3.5 rotate-180 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </p>
           </div>
         </div>
 
         {/* Security notice */}
-        <p className="text-center text-slate-700 text-xs mt-6">
-          🔒 Secure SSL connection · Access logs are archived for 90 days
+        <p className="text-center text-slate-500 text-xs mt-6 flex items-center justify-center gap-1.5">
+          <Lock className="h-3.5 w-3.5 text-slate-600" /> Secure SSL connection &middot; Access logs are archived for 90 days
         </p>
       </div>
     </div>

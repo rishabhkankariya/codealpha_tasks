@@ -98,7 +98,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="input pl-11"
+                  className="input pl-12"
                   placeholder="name@example.com"
                   required
                   autoFocus
@@ -118,7 +118,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="input pl-11 pr-11"
+                  className="input pl-12 pr-12"
                   placeholder="••••••••"
                   required
                 />
@@ -215,7 +215,7 @@ export default function LoginPage() {
                     type="email"
                     value={forgotEmail}
                     onChange={e => setForgotEmail(e.target.value)}
-                    className="input pl-11 focus:ring-orange-500"
+                    className="input pl-12 focus:ring-orange-500/10 focus:border-orange-500"
                     placeholder="name@example.com"
                     required
                     autoFocus

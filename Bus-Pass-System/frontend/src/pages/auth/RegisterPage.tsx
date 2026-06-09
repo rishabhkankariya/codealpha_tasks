@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
-import { Mail, Lock, User, Phone, AlertCircle } from 'lucide-react'
+import { Mail, Lock, User, Phone, AlertCircle, Eye, EyeOff } from 'lucide-react'
 
 export default function RegisterPage() {
   const navigate = useNavigate()
@@ -15,6 +15,8 @@ export default function RegisterPage() {
     phone: '',
   })
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -83,7 +85,7 @@ export default function RegisterPage() {
                 type="text"
                 value={formData.first_name}
                 onChange={handleChange}
-                className="input pl-11"
+                className="input pl-12"
                 placeholder="John"
                 required
               />
@@ -94,16 +96,21 @@ export default function RegisterPage() {
             <label htmlFor="last_name" className="block text-sm font-semibold text-gray-700 mb-1.5">
               Last Name
             </label>
-            <input
-              id="last_name"
-              name="last_name"
-              type="text"
-              value={formData.last_name}
-              onChange={handleChange}
-              className="input"
-              placeholder="Doe"
-              required
-            />
+            <div className="relative group">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition" />
+              </div>
+              <input
+                id="last_name"
+                name="last_name"
+                type="text"
+                value={formData.last_name}
+                onChange={handleChange}
+                className="input pl-12"
+                placeholder="Doe"
+                required
+              />
+            </div>
           </div>
         </div>
 
@@ -122,7 +129,7 @@ export default function RegisterPage() {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              className="input pl-11"
+              className="input pl-12"
               placeholder="you@example.com"
               required
             />
@@ -144,7 +151,7 @@ export default function RegisterPage() {
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              className="input pl-11"
+              className="input pl-12"
               placeholder="+1 (555) 000-0000"
             />
           </div>
@@ -162,13 +169,20 @@ export default function RegisterPage() {
             <input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={formData.password}
               onChange={handleChange}
-              className="input pl-11"
+              className="input pl-12 pr-12"
               placeholder="••••••••"
               required
             />
+            <button 
+              type="button" 
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition p-1"
+            >
+              {showPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+            </button>
           </div>
           <p className="mt-1 text-xs text-gray-500">Must be at least 8 characters</p>
         </div>
@@ -185,13 +199,20 @@ export default function RegisterPage() {
             <input
               id="confirmPassword"
               name="confirmPassword"
-              type="password"
+              type={showConfirmPassword ? 'text' : 'password'}
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="input pl-11"
+              className="input pl-12 pr-12"
               placeholder="••••••••"
               required
             />
+            <button 
+              type="button" 
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition p-1"
+            >
+              {showConfirmPassword ? <EyeOff className="h-4.5 w-4.5" /> : <Eye className="h-4.5 w-4.5" />}
+            </button>
           </div>
         </div>
 
@@ -200,16 +221,16 @@ export default function RegisterPage() {
           <input
             id="terms"
             type="checkbox"
-            className="mt-1 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500 h-4 w-4 transition cursor-pointer"
             required
           />
-          <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
+          <label htmlFor="terms" className="ml-2 text-sm text-gray-600 select-none cursor-pointer">
             I agree to the{' '}
-            <Link to="/terms" className="text-primary-600 hover:text-primary-700">
+            <Link to="/terms" className="text-blue-600 hover:text-blue-700 font-semibold transition hover:underline">
               Terms of Service
             </Link>{' '}
             and{' '}
-            <Link to="/privacy" className="text-primary-600 hover:text-primary-700">
+            <Link to="/privacy" className="text-blue-600 hover:text-blue-700 font-semibold transition hover:underline">
               Privacy Policy
             </Link>
           </label>
@@ -219,17 +240,22 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full btn btn-primary py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl transition shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          {isLoading ? 'Creating account...' : 'Create Account'}
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              Creating account…
+            </span>
+          ) : 'Create Account'}
         </button>
       </form>
 
       {/* Sign In Link */}
       <div className="mt-6 text-center">
-        <p className="text-gray-600">
+        <p className="text-gray-600 text-sm">
           Already have an account?{' '}
-          <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+          <Link to="/login" className="text-blue-600 hover:text-blue-700 font-bold transition">
             Sign in
           </Link>
         </p>
