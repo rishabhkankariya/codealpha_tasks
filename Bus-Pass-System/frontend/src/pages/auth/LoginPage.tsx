@@ -171,7 +171,7 @@ export default function LoginPage() {
               <Link to="/admin/login"
                 className="text-xs font-semibold text-gray-400 hover:text-gray-600 transition flex items-center justify-center gap-1.5 hover:scale-[1.02]"
               >
-                🔒 Admin Portal Login
+                <Lock className="h-3.5 w-3.5" /> Admin Portal Login
               </Link>
             </div>
           </div>
