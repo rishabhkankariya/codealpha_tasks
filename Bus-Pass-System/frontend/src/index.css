@@ -28,7 +28,11 @@
   }
   
   .input {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    @apply w-full px-4 py-3.5 border border-gray-200 bg-gray-50/50 rounded-xl text-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white shadow-sm focus:shadow-md text-gray-900 placeholder-gray-400;
+  }
+  
+  .input-dark {
+    @apply w-full px-4 py-3.5 border border-slate-800 bg-slate-950/60 rounded-xl text-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent focus:bg-slate-950 shadow-inner text-white placeholder-slate-600;
   }
   
   .card {

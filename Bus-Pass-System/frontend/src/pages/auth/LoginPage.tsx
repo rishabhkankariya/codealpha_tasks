@@ -98,7 +98,7 @@ export default function LoginPage() {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-gray-50/50 border border-gray-200 text-gray-900 rounded-xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition shadow-sm"
+                  className="input pl-11"
                   placeholder="name@example.com"
                   required
                   autoFocus
@@ -118,7 +118,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full bg-gray-50/50 border border-gray-200 text-gray-900 rounded-xl pl-11 pr-11 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:border-transparent transition shadow-sm"
+                  className="input pl-11 pr-11"
                   placeholder="••••••••"
                   required
                 />
@@ -215,7 +215,7 @@ export default function LoginPage() {
                     type="email"
                     value={forgotEmail}
                     onChange={e => setForgotEmail(e.target.value)}
-                    className="w-full bg-gray-50/50 border border-gray-200 text-gray-900 rounded-xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-white focus:border-transparent transition shadow-sm"
+                    className="input pl-11 focus:ring-orange-500"
                     placeholder="name@example.com"
                     required
                     autoFocus

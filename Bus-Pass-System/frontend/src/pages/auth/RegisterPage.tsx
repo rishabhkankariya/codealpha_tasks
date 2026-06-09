@@ -68,20 +68,22 @@ export default function RegisterPage() {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Name Fields */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="first_name" className="block text-sm font-semibold text-gray-700 mb-1.5">
               First Name
             </label>
-            <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="relative group">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition" />
+              </div>
               <input
                 id="first_name"
                 name="first_name"
                 type="text"
                 value={formData.first_name}
                 onChange={handleChange}
-                className="input pl-10"
+                className="input pl-11"
                 placeholder="John"
                 required
               />
@@ -89,7 +91,7 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label htmlFor="last_name" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="last_name" className="block text-sm font-semibold text-gray-700 mb-1.5">
               Last Name
             </label>
             <input
@@ -107,18 +109,20 @@ export default function RegisterPage() {
 
         {/* Email */}
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">
             Email Address
           </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <div className="relative group">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+              <Mail className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition" />
+            </div>
             <input
               id="email"
               name="email"
               type="email"
               value={formData.email}
               onChange={handleChange}
-              className="input pl-10"
+              className="input pl-11"
               placeholder="you@example.com"
               required
             />
@@ -127,18 +131,20 @@ export default function RegisterPage() {
 
         {/* Phone */}
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-1.5">
             Phone Number (Optional)
           </label>
-          <div className="relative">
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <div className="relative group">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+              <Phone className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition" />
+            </div>
             <input
               id="phone"
               name="phone"
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              className="input pl-10"
+              className="input pl-11"
               placeholder="+1 (555) 000-0000"
             />
           </div>
@@ -146,18 +152,20 @@ export default function RegisterPage() {
 
         {/* Password */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1.5">
             Password
           </label>
-          <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <div className="relative group">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+              <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition" />
+            </div>
             <input
               id="password"
               name="password"
               type="password"
               value={formData.password}
               onChange={handleChange}
-              className="input pl-10"
+              className="input pl-11"
               placeholder="••••••••"
               required
             />
@@ -167,18 +175,20 @@ export default function RegisterPage() {
 
         {/* Confirm Password */}
         <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="confirmPassword" className="block text-sm font-semibold text-gray-700 mb-1.5">
             Confirm Password
           </label>
-          <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <div className="relative group">
+            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-none">
+              <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition" />
+            </div>
             <input
               id="confirmPassword"
               name="confirmPassword"
               type="password"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="input pl-10"
+              className="input pl-11"
               placeholder="••••••••"
               required
             />

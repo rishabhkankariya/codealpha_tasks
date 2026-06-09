@@ -76,7 +76,7 @@ export default function AdminLoginPage() {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="admin@smartbus.com"
                   required
-                  className="w-full bg-slate-950 border border-slate-800 text-white placeholder-slate-600 rounded-xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition shadow-inner"
+                  className="input-dark pl-11"
                 />
               </div>
             </div>
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
                   onChange={e => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full bg-slate-950 border border-slate-800 text-white placeholder-slate-600 rounded-xl pl-11 pr-11 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition shadow-inner"
+                  className="input-dark pl-11 pr-11"
                 />
                 <button 
                   type="button" 
