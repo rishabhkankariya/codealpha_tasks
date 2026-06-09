@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import api from '../lib/api'
+import { useAuthStore } from '../store/authStore'
 import { MapPin, Clock, Users, AlertCircle, CheckCircle, Search, X, Zap } from 'lucide-react'
 
 interface Route {
@@ -25,6 +26,7 @@ interface Schedule {
 export default function BookTicketPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { user } = useAuthStore()
 
   // Pre-selected route passed via navigation state (from RoutesPage or Chatbot)
   const preSelected: Route | null = (location.state as any)?.route ?? null
@@ -112,26 +114,69 @@ export default function BookTicketPage() {
   }
 
   const handleBooking = async () => {
-    if (!selectedRoute || !selectedSchedule) return
+    if (!selectedRoute || !selectedSchedule || !user) return
     try {
       setLoading(true)
       setError('')
-      await api.post('/api/v1/bookings/', {
-        schedule_id: selectedSchedule.id,
-        booking_date: selectedDate,
-        num_seats: numSeats,
-      })
-      setSuccess(true)
-      setTimeout(() => navigate('/my-bookings'), 2000)
+      
+      // 1. Fetch Razorpay key from backend configuration
+      const configRes = await api.get('/api/v1/payments/config')
+      const razorpayKey = configRes.data.razorpay_key_id
+      
+      const email = user.email
+      const amount = Math.round(fare * numSeats * 100)
+      
+      const options = {
+        key: razorpayKey,
+        amount: amount.toString(),
+        currency: "INR",
+        name: "PMPML Transit",
+        description: `Ticket Booking: Route ${selectedRoute.route_number}`,
+        prefill: { email: email, name: `${user.first_name} ${user.last_name}` },
+        handler: async function (response: any) {
+          try {
+            setLoading(true)
+            setError('')
+            
+            // Send to verify endpoint (verifies, captures, and creates booking)
+            await api.post('/api/v1/payments/verify', {
+              payment_id: response.razorpay_payment_id,
+              email: email,
+              reference_type: "booking",
+              schedule_id: selectedSchedule.id,
+              journey_date: selectedDate,
+              num_seats: numSeats
+            })
+            
+            setSuccess(true)
+            setTimeout(() => navigate('/my-bookings'), 2000)
+          } catch (err: any) {
+            setError(err.response?.data?.detail || 'Payment verification failed.')
+          } finally {
+            setLoading(false)
+          }
+        },
+        theme: {
+          color: "#2e5bff"
+        },
+        modal: {
+          ondismiss: function() {
+            setLoading(false)
+          }
+        }
+      }
+      
+      const rzp = new (window as any).Razorpay(options)
+      rzp.open()
+      
     } catch (err: any) {
       const detail = err.response?.data?.detail
       const msg = typeof detail === 'string'
         ? detail
         : Array.isArray(detail)
           ? detail.map((e: any) => e.msg || e).join(', ')
-          : 'Booking failed. Please try again.'
+          : 'Failed to initiate payment. Please try again.'
       setError(msg)
-    } finally {
       setLoading(false)
     }
   }

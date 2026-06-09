@@ -47,9 +47,25 @@ export default function ReceiptPage() {
 
   const handlePrint = () => window.print()
 
-  const handleDownload = () => {
-    // Use browser print-to-PDF
-    window.print()
+  const handleDownload = async () => {
+    if (!booking) return
+    try {
+      const response = await api.get(`/api/v1/payments/receipt/${booking.id}`, {
+        responseType: 'blob'
+      })
+      const blob = new Blob([response.data], { type: 'application/pdf' })
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', `receipt-ticket-${booking.id.slice(0, 8)}.pdf`)
+      document.body.appendChild(link)
+      link.click()
+      link.parentNode?.removeChild(link)
+      window.URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Download failed:', err)
+      alert('Failed to download PDF receipt. You can use standard Print to print/save instead.')
+    }
   }
 
   if (loading) return (

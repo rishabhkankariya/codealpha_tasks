@@ -1,6 +1,6 @@
 """Application configuration"""
 
-from typing import Optional, List
+from typing import Optional, List, Any
 from pydantic_settings import BaseSettings
 from pydantic import validator
 
@@ -60,6 +60,17 @@ class Settings(BaseSettings):
     # Application Insights
     APPINSIGHTS_INSTRUMENTATION_KEY: Optional[str] = None
     
+    # Razorpay Settings
+    RAZORPAY_KEY_ID: str = "rzp_test_IolWD7jMEYvkV3"
+    RAZORPAY_SECRET: str = "VFFhKZIoDTo21gzlqfWf91HO"
+    
+    # SMTP Settings
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: Optional[str] = None
+    SMTP_PASSWORD: Optional[str] = None
+    SMTP_SENDER_EMAIL: Optional[str] = None
+    
     # Celery
     CELERY_BROKER_URL: Optional[str] = None
     CELERY_RESULT_BACKEND: Optional[str] = None
@@ -77,7 +88,7 @@ class Settings(BaseSettings):
         return values.get("REDIS_URL")
     
     @validator("CORS_ORIGINS", pre=True)
-    def assemble_cors_origins(cls, v: any) -> List[str]:
+    def assemble_cors_origins(cls, v: Any) -> List[str]:
         if isinstance(v, str):
             if v.startswith("[") and v.endswith("]"):
                 import json
