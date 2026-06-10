@@ -22,7 +22,7 @@ link: http://codealpha-tasks.pages.dev/
 
 Folder: `AI-Chatbot`
 
-link: https://9cc15345.codealpha-ai-chatbot.pages.dev/login
+link: https://codealpha-ai-chatbot.pages.dev/login
 
 ## Author
 Rishabh Kankariya
