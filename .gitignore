@@ -1,0 +1,52 @@
+# ===========================
+# Python / Backend
+# ===========================
+venv/
+.venv/
+env/
+ENV/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+dist/
+build/
+*.sqlite3
+*.db
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# ===========================
+# Node / Frontend
+# ===========================
+node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# ===========================
+# Environment Variables
+# ===========================
+.env
+.env.*
+!.env.example
+
+# ===========================
+# IDE & Editor
+# ===========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# ===========================
+# Docker
+# ===========================
+*.log
