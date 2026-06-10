@@ -12,6 +12,8 @@ This repository contains my completed CodeAlpha Internship Tasks.
 
 Folder: `Bus-Pass-System`
 
+link: http://codealpha-tasks.pages.dev/
+
 ### Task 2: AI Chatbot
 - AI-powered chatbot
 - Instant response generation
@@ -19,6 +21,8 @@ Folder: `Bus-Pass-System`
 - User query handling
 
 Folder: `AI-Chatbot`
+
+link: https://9cc15345.codealpha-ai-chatbot.pages.dev/login
 
 ## Author
 Rishabh Kankariya
