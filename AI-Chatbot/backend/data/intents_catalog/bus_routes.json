@@ -1,0 +1,13 @@
+{
+  "intent": "Bus Routes",
+  "patterns": [
+    "what are the bus routes", "bus route timings", "does the bus go to my area", 
+    "transport facility route list", "bus pickup points", "transport schedule", 
+    "pick-up hours", "bus tracking", "bus destinations", "college vehicle route", 
+    "transit lines", "map of bus routes", "morning pickup times", "evening drop times",
+    "bus stops list", "transportation schedule", "shuttle service mapping"
+  ],
+  "responses": [
+    "Our transport facility covers 15 major routes across the city. Buses run twice a day (morning pickup and evening drop). The detailed list of routes, pickup points, and timings is available on the transport info page."
+  ]
+}

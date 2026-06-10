@@ -1,151 +1,83 @@
-import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { useAuthStore } from './store/authStore'
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ChatPage from './pages/ChatPage';
+import AdminPage from './pages/AdminPage';
 
-import MainLayout from './layouts/MainLayout'
-import AdminLayout from './layouts/AdminLayout'
-import AuthLayout from './layouts/AuthLayout'
-
-// Public pages
-import HomePage from './pages/HomePage'
-import RoutesPage from './pages/RoutesPage'
-import PrivacyPage from './pages/PrivacyPage'
-import TermsPage from './pages/TermsPage'
-import AccessibilityPage from './pages/AccessibilityPage'
-
-// Auth pages
-import LoginPage from './pages/auth/LoginPage'
-import RegisterPage from './pages/auth/RegisterPage'
-import AdminLoginPage from './pages/auth/AdminLoginPage'
-
-// Passenger pages
-import DashboardPage from './pages/DashboardPage'
-import BookTicketPage from './pages/BookTicketPage'
-import MyBookingsPage from './pages/MyBookingsPage'
-import ReceiptPage from './pages/ReceiptPage'
-import BuyPassPage from './pages/BuyPassPage'
-import MyPassesPage from './pages/MyPassesPage'
-import ProfilePage from './pages/ProfilePage'
-import ChatbotPage from './pages/ChatbotPage'
-
-// Admin pages
-import AdminDashboardPage from './pages/admin/AdminDashboardPage'
-import AdminAnalyticsPage from './pages/admin/AdminAnalyticsPage'
-import AdminBookingsPage from './pages/admin/AdminBookingsPage'
-import AdminPassesPage from './pages/admin/AdminPassesPage'
-import AdminUsersPage from './pages/admin/AdminUsersPage'
-import ManageRoutesPage from './pages/admin/ManageRoutesPage'
-import AdminSettingsPage from './pages/admin/AdminSettingsPage'
-
-// ── Guards ────────────────────────────────────────────────────────────────────
-
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useAuthStore()
-  const hasToken = !!localStorage.getItem('access_token')
-
-  if (isLoading || (hasToken && !isAuthenticated)) {
+// Route guard for authenticated users
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { token, loading } = useAuth();
+  
+  if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600"></div>
-          <p className="mt-3 text-sm text-gray-500 font-medium">Verifying session...</p>
+      <div className="min-h-screen bg-chatBg flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-4 border-chatPrimary border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-chatTextMuted">Loading user session...</span>
         </div>
       </div>
-    )
+    );
   }
+  
+  return token ? <>{children}</> : <Navigate to="/login" replace />;
+};
 
-  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />
-}
-
-function PublicRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuthStore()
-  return !isAuthenticated ? <>{children}</> : <Navigate to="/dashboard" replace />
-}
-
-function AdminRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, user, isLoading } = useAuthStore()
-  const hasToken = !!localStorage.getItem('access_token')
-
-  if (isLoading || (hasToken && !isAuthenticated)) {
+// Route guard for administrators only
+const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { token, user, loading } = useAuth();
+  
+  if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600"></div>
-          <p className="mt-3 text-sm text-gray-500 font-medium">Verifying session...</p>
+      <div className="min-h-screen bg-chatBg flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-4 border-chatPrimary border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-chatTextMuted">Authenticating administrator...</span>
         </div>
       </div>
-    )
+    );
   }
+  
+  if (!token) return <Navigate to="/login" replace />;
+  return user?.role === 'admin' ? <>{children}</> : <Navigate to="/" replace />;
+};
 
-  if (!isAuthenticated) return <Navigate to="/admin/login" replace />
-  const role = (user as any)?.role?.toLowerCase()
-  if (role !== 'admin') return <Navigate to="/admin/login" replace />
-  return <>{children}</>
-}
-
-// ── App ───────────────────────────────────────────────────────────────────────
-
-function App() {
-  const { fetchUser } = useAuthStore()
-
-  useEffect(() => {
-    const token = localStorage.getItem('access_token')
-    if (token) {
-      fetchUser()
-    }
-  }, [fetchUser])
-
+const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Public Authentication Pages */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
 
-        {/* ── PUBLIC (MainLayout with footer) ─────────────────────── */}
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="routes" element={<RoutesPage />} />
-          <Route path="privacy" element={<PrivacyPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="accessibility" element={<AccessibilityPage />} />
-        </Route>
+          {/* Protected Chat Dashboard Interface */}
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <ChatPage />
+              </ProtectedRoute>
+            } 
+          />
 
-        {/* ── AUTH ────────────────────────────────────────────────── */}
-        <Route path="/" element={<AuthLayout />}>
-          <Route path="login"    element={<PublicRoute><LoginPage /></PublicRoute>} />
-          <Route path="register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
-        </Route>
+          {/* Protected Administrative Dashboard */}
+          <Route 
+            path="/admin" 
+            element={
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
+            } 
+          />
 
-        {/* ── ADMIN LOGIN (standalone, no layout wrapper) ──────────── */}
-        <Route path="/admin/login" element={<AdminLoginPage />} />
+          {/* Fallback Catch-all routing */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
-        {/* ── PASSENGER (MainLayout, auth required) ───────────────── */}
-        <Route path="/" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
-          <Route path="dashboard"   element={<DashboardPage />} />
-          <Route path="book-ticket" element={<BookTicketPage />} />
-          <Route path="my-bookings" element={<MyBookingsPage />} />
-          <Route path="my-bookings/receipt/:bookingId" element={<ReceiptPage />} />
-          <Route path="buy-pass"    element={<BuyPassPage />} />
-          <Route path="my-passes"   element={<MyPassesPage />} />
-          <Route path="profile"     element={<ProfilePage />} />
-          <Route path="ai-assistant" element={<ChatbotPage />} />
-        </Route>
-
-        {/* ── ADMIN (AdminLayout, admin role required) ─────────────── */}
-        <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
-          <Route index          element={<AdminDashboardPage />} />
-          <Route path="analytics" element={<AdminAnalyticsPage />} />
-          <Route path="bookings"  element={<AdminBookingsPage />} />
-          <Route path="passes"    element={<AdminPassesPage />} />
-          <Route path="routes"    element={<ManageRoutesPage />} />
-          <Route path="users"     element={<AdminUsersPage />} />
-          <Route path="settings"  element={<AdminSettingsPage />} />
-        </Route>
-
-        {/* ── 404 ─────────────────────────────────────────────────── */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-
-      </Routes>
-    </Router>
-  )
-}
-
-export default App
+export default App;

@@ -1,0 +1,12 @@
+{
+  "intent": "Contact Support",
+  "patterns": [
+    "how to contact support", "customer care", "phone number", "email address", 
+    "office hours", "helpline number", "speak to human", "customer support", 
+    "talk to representative", "administrator office contact", "administrative staff",
+    "call help desk", "find support contacts", "reach support team", "speak with agent"
+  ],
+  "responses": [
+    "You can contact our support team at support@example.com or call our helpline at +1-800-555-0199 (Mon-Fri, 9 AM to 5 PM). Alternatively, you can submit a feedback form or a complaint."
+  ]
+}

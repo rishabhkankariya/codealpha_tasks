@@ -1,0 +1,13 @@
+{
+  "intent": "Refund",
+  "patterns": [
+    "how to get a refund", "refund policy", "cancel admission refund", 
+    "money refund status", "fee refund", "get money back", 
+    "transaction cancellation", "reimbursement process", "returning the money", 
+    "accounts refund request", "how to retrieve security deposit",
+    "refund of caution money", "admission cancellation reimbursement"
+  ],
+  "responses": [
+    "Refunds are processed in accordance with our refund policy. If you cancel your admission before classes start, you are eligible for a 90% refund. Request forms are available at the accounts department."
+  ]
+}

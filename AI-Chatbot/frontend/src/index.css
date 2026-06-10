@@ -1,66 +1,46 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-chatBg: #0A0A0A;
+  --color-chatCard: #171717;
+  --color-chatBorder: #262626;
+  --color-chatPrimary: #10A37F;
+  --color-chatText: #FFFFFF;
+  --color-chatTextMuted: #A3A3A3;
+  --font-sans: "Inter", "system-ui", "sans-serif";
+}
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    background-color: #0A0A0A;
+    color: #FFFFFF;
+    font-family: var(--font-sans);
   }
 }
 
-@layer components {
-  .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
-  }
-  
-  .btn-primary {
-    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
-  }
-  
-  .btn-secondary {
-    @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500;
-  }
-  
-  .btn-outline {
-    @apply border-2 border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500;
-  }
-  
-  .input {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
-  }
-  
-  .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6;
-  }
-
-  .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-  }
-
-  .glow-blue {
-    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-  }
-
-  .glow-violet {
-    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
-  }
-
-  @keyframes shimmer {
-    100% {
-      transform: translateX(100%);
-    }
-  }
-
-  .animate-shimmer {
-    animation: shimmer 1.5s infinite;
-  }
+/* Custom Scrollbar styling for a premium feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-html {
-  scroll-behavior: smooth;
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10A37F;
+}
+
+/* Glassmorphism utility class */
+.glass-panel {
+  background: rgba(23, 23, 23, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(38, 38, 38, 0.6);
 }

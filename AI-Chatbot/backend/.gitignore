@@ -1,0 +1,23 @@
+# Python Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python Cache & compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local Database & data artifacts
+data/*.db
+data/chatbot.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local configuration
+.env

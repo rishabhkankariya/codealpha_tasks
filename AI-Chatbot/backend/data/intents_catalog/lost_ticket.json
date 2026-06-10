@@ -1,0 +1,13 @@
+{
+  "intent": "Lost Ticket",
+  "patterns": [
+    "lost my bus ticket", "lost ticket fine", "what to do if ticket is lost", 
+    "duplicate bus pass", "I lost my pass", "transit card replacement", 
+    "misplaced ticket", "duplicate receipt", "replacement card fee", 
+    "forgot my pass", "stolen transport card", "ticket loss fine",
+    "misplaced bus subscription card", "report lost pass"
+  ],
+  "responses": [
+    "If you have lost your bus pass/ticket, please report it immediately to the transport office. A duplicate pass can be issued upon submitting a copy of your application and paying a nominal replacement fee of $10."
+  ]
+}

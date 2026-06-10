@@ -1,0 +1,16 @@
+{
+  "intent": "Admission",
+  "patterns": [
+    "how to get admission", "admission process", "apply for admission", 
+    "when does admission start", "admission criteria", "entrance exam details", 
+    "where can I apply", "admission form", "take admission", "registry process", 
+    "joining the college", "enrollment process", "sign up for classes", 
+    "new student entry", "admission requirements", "how to join", "intake process",
+    "admissions checklist", "how to apply as freshman", "transfer student admission",
+    "eligibility for courses", "cut off marks", "course registration list",
+    "deadlines for application", "register for next year"
+  ],
+  "responses": [
+    "Admissions can be applied for online via the admissions portal on our main website. Applications for the next academic year open in June and close in August. Would you like me to guide you to the portal?"
+  ]
+}

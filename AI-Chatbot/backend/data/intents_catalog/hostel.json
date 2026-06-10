@@ -1,0 +1,14 @@
+{
+  "intent": "Hostel",
+  "patterns": [
+    "hostel accommodation", "is there a hostel facility", "hostel fees", 
+    "how to apply for hostel", "hostel mess food", "rooms availability in hostel", 
+    "rules for hostel", "dorm rooms", "living on campus", "housing facility", 
+    "hostel warden", "boarding house", "campus residence", "check-in to room",
+    "residential block checkin", "boys hostel block", "girls hostel facility",
+    "accommodation guidelines", "room assignment rules", "hostel mess menu"
+  ],
+  "responses": [
+    "Yes, we provide separate hostel facilities for boys and girls with 24/7 security, Wi-Fi, and mess facilities. Hostel registration can be requested during the admission process or by visiting the Hostel Warden's office."
+  ]
+}

@@ -1,0 +1,17 @@
+[Unit]
+Description=FastAPI AI Chatbot Platform Daemon
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/chatbot/backend
+Environment="PATH=/var/www/chatbot/backend/venv/bin"
+Environment="SECRET_KEY=super_secret_jwt_key_for_chatbot_platform_123456"
+Environment="DATABASE_URL=sqlite:////var/www/chatbot/backend/data/chatbot.db"
+ExecStart=/var/www/chatbot/backend/venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

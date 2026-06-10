@@ -1,0 +1,14 @@
+{
+  "intent": "Bus Pass",
+  "patterns": [
+    "how to apply for bus pass", "bus pass application", "renew my bus pass", 
+    "bus pass cost", "what document is needed for bus pass", "student bus pass",
+    "transport identity card", "bus subscription", "transport ticket renewal",
+    "applying for transportation card", "student travel pass", "card renewal",
+    "bus pass registration", "renew travel subscription", "misplaced pass replacement",
+    "monthly bus ticket", "renew transport pass", "bus discount card"
+  ],
+  "responses": [
+    "You can apply for a student bus pass online via the Bus Pass module. You will need to upload your college ID card, a passport-sized photograph, and address proof. Verification takes 2-3 working days."
+  ]
+}

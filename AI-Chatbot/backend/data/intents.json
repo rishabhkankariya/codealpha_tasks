@@ -1,0 +1,164 @@
+[
+  {
+    "intent": "Greeting",
+    "patterns": [
+      "hello",
+      "hi",
+      "hey",
+      "good morning",
+      "good afternoon",
+      "good evening",
+      "is anyone there?",
+      "hola",
+      "greetings",
+      "howdy"
+    ],
+    "responses": [
+      "Hello! Welcome to our chatbot support platform. How can I help you today?",
+      "Hi there! How can I assist you today?",
+      "Greetings! What can I do for you today?"
+    ]
+  },
+  {
+    "intent": "Admission",
+    "patterns": [
+      "how to get admission",
+      "admission process",
+      "apply for admission",
+      "when does admission start",
+      "admission criteria",
+      "entrance exam details",
+      "where can I apply",
+      "admission form"
+    ],
+    "responses": [
+      "Admissions can be applied for online via the admissions portal on our main website. Applications for the next academic year open in June and close in August. Would you like me to guide you to the portal?"
+    ]
+  },
+  {
+    "intent": "Fees",
+    "patterns": [
+      "what is the fee structure",
+      "how much does it cost",
+      "semester fees",
+      "payment methods for fees",
+      "tuition fee",
+      "due date for fee payment",
+      "late fee fine",
+      "how to pay online"
+    ],
+    "responses": [
+      "Fees vary by course and semester. You can view the detailed fee structure under the 'Academics -> Fees' section on our portal. Payments can be made via credit/debit card, net banking, or UPI through our secure online payment gateway."
+    ]
+  },
+  {
+    "intent": "Hostel",
+    "patterns": [
+      "hostel accommodation",
+      "is there a hostel facility",
+      "hostel fees",
+      "how to apply for hostel",
+      "hostel mess food",
+      "rooms availability in hostel",
+      "rules for hostel"
+    ],
+    "responses": [
+      "Yes, we provide separate hostel facilities for boys and girls with 24/7 security, Wi-Fi, and mess facilities. Hostel registration can be requested during the admission process or by visiting the Hostel Warden's office."
+    ]
+  },
+  {
+    "intent": "Bus Pass",
+    "patterns": [
+      "how to apply for bus pass",
+      "bus pass application",
+      "renew my bus pass",
+      "bus pass cost",
+      "what document is needed for bus pass",
+      "student bus pass"
+    ],
+    "responses": [
+      "You can apply for a student bus pass online via the Bus Pass module. You will need to upload your college ID card, a passport-sized photograph, and address proof. Verification takes 2-3 working days."
+    ]
+  },
+  {
+    "intent": "Bus Routes",
+    "patterns": [
+      "what are the bus routes",
+      "bus route timings",
+      "does the bus go to my area",
+      "transport facility route list",
+      "bus pickup points"
+    ],
+    "responses": [
+      "Our transport facility covers 15 major routes across the city. Buses run twice a day (morning pickup and evening drop). The detailed list of routes, pickup points, and timings is available on the transport info page."
+    ]
+  },
+  {
+    "intent": "Lost Ticket",
+    "patterns": [
+      "lost my bus ticket",
+      "lost ticket fine",
+      "what to do if ticket is lost",
+      "duplicate bus pass",
+      "I lost my pass"
+    ],
+    "responses": [
+      "If you have lost your bus pass/ticket, please report it immediately to the transport office. A duplicate pass can be issued upon submitting a copy of your application and paying a nominal replacement fee of $10."
+    ]
+  },
+  {
+    "intent": "Refund",
+    "patterns": [
+      "how to get a refund",
+      "refund policy",
+      "cancel admission refund",
+      "money refund status",
+      "fee refund"
+    ],
+    "responses": [
+      "Refunds are processed in accordance with our refund policy. If you cancel your admission before classes start, you are eligible for a 90% refund. Request forms are available at the accounts department."
+    ]
+  },
+  {
+    "intent": "Contact Support",
+    "patterns": [
+      "how to contact support",
+      "customer care",
+      "phone number",
+      "email address",
+      "office hours",
+      "helpline number",
+      "speak to human"
+    ],
+    "responses": [
+      "You can contact our support team at support@example.com or call our helpline at +1-800-555-0199 (Mon-Fri, 9 AM to 5 PM). Alternatively, you can submit a feedback form or a complaint."
+    ]
+  },
+  {
+    "intent": "Complaint",
+    "patterns": [
+      "raise a complaint",
+      "file a grievance",
+      "complain about transport",
+      "bad service",
+      "unhappy with service",
+      "hostel complaint"
+    ],
+    "responses": [
+      "We are sorry to hear that. You can submit a formal complaint directly through your dashboard. Go to settings/support, or submit a comment using the feedback form. We aim to address all grievances within 48 hours."
+    ]
+  },
+  {
+    "intent": "General FAQ",
+    "patterns": [
+      "tell me about the college",
+      "what is this website",
+      "general questions",
+      "how does it work",
+      "frequently asked questions"
+    ],
+    "responses": [
+      "This platform is designed to answer student queries regarding Admissions, Fees, Hostel accommodation, Bus Passes, and general FAQ. Type your question in the chat bar below, and I will assist you instantly!"
+    ]
+  }
+]

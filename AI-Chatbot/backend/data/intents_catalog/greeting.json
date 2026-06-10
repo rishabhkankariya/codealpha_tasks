@@ -1,0 +1,15 @@
+{
+  "intent": "Greeting",
+  "patterns": [
+    "hello", "hi", "hey", "good morning", "good afternoon", "good evening", 
+    "is anyone there", "hola", "greetings", "howdy", "yo", "morning", "hiya", 
+    "hello bot", "hey chatbot", "start", "wake up", "activate", "talk to me",
+    "is this working", "are you online", "anyone home", "good day", "hey there",
+    "hello helpdesk", "hello assistant", "hey computer"
+  ],
+  "responses": [
+    "Hello! Welcome to our chatbot support platform. How can I help you today?",
+    "Hi there! How can I assist you today?",
+    "Greetings! What can I do for you today?"
+  ]
+}

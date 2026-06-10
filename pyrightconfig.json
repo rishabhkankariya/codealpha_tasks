@@ -1,7 +1,18 @@
 {
-  "venvPath": "c:/Users/Rishabh Kankariya/Desktop/codealpha_tasks/Bus-Pass-System/backend",
-  "venv": ".venv",
-  "extraPaths": [
-    "c:/Users/Rishabh Kankariya/Desktop/codealpha_tasks/Bus-Pass-System/backend"
+  "executionEnvironments": [
+    {
+      "root": "Bus-Pass-System/backend",
+      "extraPaths": [
+        "Bus-Pass-System/backend",
+        "Bus-Pass-System/backend/.venv/Lib/site-packages"
+      ]
+    },
+    {
+      "root": "AI-Chatbot/backend",
+      "extraPaths": [
+        "AI-Chatbot/backend",
+        "AI-Chatbot/backend/venv/Lib/site-packages"
+      ]
+    }
   ]
 }

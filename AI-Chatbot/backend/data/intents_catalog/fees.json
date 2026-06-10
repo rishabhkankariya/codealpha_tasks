@@ -1,0 +1,15 @@
+{
+  "intent": "Fees",
+  "patterns": [
+    "what is the fee structure", "how much does it cost", "semester fees", 
+    "payment methods for fees", "tuition fee", "due date for fee payment", 
+    "late fee fine", "how to pay online", "pricing", "cost of classes", 
+    "college fee payment", "college bills", "online payment portal", 
+    "installments", "bank transfer details", "check my balance", "how to clear dues",
+    "financial payment rules", "costs per credit hour", "academic pricing structure",
+    "charges list", "card payments", "fees details", "refund of extra fees paid"
+  ],
+  "responses": [
+    "Fees vary by course and semester. You can view the detailed fee structure under the 'Academics -> Fees' section on our portal. Payments can be made via credit/debit card, net banking, or UPI through our secure online payment gateway."
+  ]
+}

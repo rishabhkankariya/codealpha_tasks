@@ -1,0 +1,13 @@
+{
+  "intent": "Complaint",
+  "patterns": [
+    "raise a complaint", "file a grievance", "complain about transport", 
+    "bad service", "unhappy with service", "hostel complaint", "register issue", 
+    "report problem", "submit grievance", "service error report", 
+    "unhappy with warden", "report transport issues", "food quality complaint",
+    "submit dispute form", "file formal complaint"
+  ],
+  "responses": [
+    "We are sorry to hear that. You can submit a formal complaint directly through your dashboard. Go to settings/support, or submit a comment using the feedback form. We aim to address all grievances within 48 hours."
+  ]
+}

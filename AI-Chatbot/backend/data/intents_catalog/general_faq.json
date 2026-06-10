@@ -1,0 +1,13 @@
+{
+  "intent": "General FAQ",
+  "patterns": [
+    "tell me about the college", "what is this website", "general questions", 
+    "how does it work", "frequently asked questions", "information guide", 
+    "portal help", "basic instructions", "system info", "general help guide",
+    "faq document", "show me common questions", "what can you do", "bot functions",
+    "how to use chatbot", "help manual", "student guide"
+  ],
+  "responses": [
+    "This platform is designed to answer student queries regarding Admissions, Fees, Hostel accommodation, Bus Passes, and general FAQ. Type your question in the chat bar below, and I will assist you instantly!"
+  ]
+}
