@@ -2,6 +2,8 @@
 
 A modern, production-ready, highly optimized AI chatbot platform designed for low-resource cloud servers (e.g. Azure Student Free Tier VM: 2 vCPU, 1 GB RAM, Ubuntu). It utilizes a hybrid AI retrieval approach combining **Intent Classification** (via Cosine Similarity) and **Dense FAQ Search** (via FAISS Vector Store).
 
+* **Live Demo Link**: [https://ai-chatbot-system-by-rishabh-kankariya.pages.dev/](https://ai-chatbot-system-by-rishabh-kankariya.pages.dev/)
+
 ---
 
 ## System Architecture
